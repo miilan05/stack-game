@@ -146,7 +146,15 @@ function onClick() {
     speed += .00058
     let intersect = intersects(0.12)
     if (lost) {restart()}
-    else if (intersect == false || intersect.right - intersect.left < 0) {lost = true, speed = 0, needsUp = 0}
+    else if (intersect == false) {
+        lost = true
+        speed = 0
+        needsUp = 0
+        let body = meshToBody(m.at(-1), 1, true)
+        world.addBody(body)
+        falling.push(mesh)
+        falling2.push(body)
+    }
     else if (intersect == "skip") {
             score.innerHTML = parseInt(score.innerHTML) + 1
             placeNewBlock()
@@ -267,8 +275,8 @@ function intersects(n) {
             piece.right = intersection.left
         }
     }
-
-    if ((intersection.left < intersection.right && intersection.bottom > intersection.top)) {
+    if ((intersection.left > intersection.right || intersection.bottom > intersection.top)) {
+        console.log("dd")
         return false
     }
     else {
