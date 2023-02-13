@@ -135,8 +135,8 @@ const openFullscreen = () => {
       || el.msRequestFullscreen
       ;
      rfs.call(el);
-     window.removeEventListener("click",  openFullscreen)
-     window.addEventListener("click", onClick)
+     document.removeEventListener("click",  openFullscreen)
+     document.addEventListener("click", onClick)
      resize()
 }
 document.addEventListener("click", openFullscreen)
