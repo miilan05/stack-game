@@ -127,23 +127,23 @@ function resize() {
     renderer.setSize(sizes.width, sizes.height);
 }
 
-const openFullscreen = () => {
-    var el = document.documentElement,
-    rfs = el.requestFullscreen
-      || el.webkitRequestFullScreen
-      || el.mozRequestFullScreen
-      || el.msRequestFullscreen
-      ;
-     rfs.call(el);
-     document.addEventListener("click", onClick)
-     resize()
-}
-document.addEventListener("click", openFullscreen, {once: true})
+// const openFullscreen = () => {
+//     var el = document.documentElement,
+//     rfs = el.requestFullscreen
+//       || el.webkitRequestFullScreen
+//       || el.mozRequestFullScreen
+//       || el.msRequestFullscreen
+//       ;
+//      rfs.call(el);
+//      document.addEventListener("click", onClick)
+//      resize()
+// }
+
+document.addEventListener("click", onClick)
 
 function onClick() {
     needsUp+= cubeHeight
     speed += .00058
-    // openFullscreen()
     let intersect = intersects(0.12)
     if (lost) {restart()}
     else if (intersect == false || intersect.right - intersect.left < 0) {lost = true, speed = 0, needsUp = 0}
