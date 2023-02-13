@@ -135,11 +135,10 @@ const openFullscreen = () => {
       || el.msRequestFullscreen
       ;
      rfs.call(el);
-     document.removeEventListener("click",  openFullscreen)
      document.addEventListener("click", onClick)
      resize()
 }
-document.addEventListener("click", openFullscreen)
+document.addEventListener("click", openFullscreen, {once: true})
 
 function onClick() {
     needsUp+= cubeHeight
