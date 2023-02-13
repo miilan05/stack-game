@@ -139,7 +139,7 @@ const openFullscreen = () => {
      window.addEventListener("click", onClick)
      resize()
 }
-window.addEventListener("click", openFullscreen)
+document.addEventListener("click", openFullscreen)
 
 function onClick() {
     needsUp+= cubeHeight
