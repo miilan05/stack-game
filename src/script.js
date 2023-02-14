@@ -113,7 +113,6 @@ function init() {
 window.addEventListener("resize", resize)
 
 function resize() {
-
     sizes.width = window.innerWidth;
     sizes.height = window.innerHeight;
     camera.aspect= sizes.width / sizes.height;
@@ -151,9 +150,9 @@ function onClick() {
         speed = 0
         needsUp = 0
         let body = meshToBody(m.at(-1), 1, true)
-        world.addBody(body)
-        falling.push(mesh)
+        falling.push(m.at(-1))
         falling2.push(body)
+        world.addBody(body)
     }
     else if (intersect == "skip") {
             score.innerHTML = parseInt(score.innerHTML) + 1
@@ -175,12 +174,12 @@ function cutAndPlace(i) {
     currentShape.x = i.right - i.left
     currentShape.y = i.top - i.bottom
     let geometry = new THREE.BoxGeometry(currentShape.x , currentShape.y, cubeHeight)
-    let mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial().copy(m[m.length-1].material));
+    let mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial().copy(m.at(-1).material));
     mesh.rotation.x = Math.PI/2;
     mesh.position.set(i.left + (i.right - i.left)/2, currentHeight, i.bottom + (i.top - i.bottom)/2)
     mesh.castShadow = true  
     mesh.receiveShadow = true
-    scene.remove(m[m.length - 1])
+    scene.remove(m.at(-1))
     m.pop()
     m.push(mesh)
     score.innerHTML = parseInt(score.innerHTML) + 1
@@ -191,7 +190,7 @@ function cutAndPlace(i) {
 
 function cutAndPlace2(piece) {
     let geometry = new THREE.BoxGeometry(piece.right - piece.left , piece.top - piece.bottom, cubeHeight)
-    let mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial().copy(m[m.length-1].material));
+    let mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial().copy(m.at(-1).material));
     mesh.rotation.x = Math.PI/2;
     mesh.position.set(piece.left + (piece.right - piece.left)/2, currentHeight, piece.bottom + (piece.top - piece.bottom)/2)
     let body = meshToBody(mesh, 1, true)
@@ -219,15 +218,15 @@ function restart() {
 }
 
 function intersects(n) {
-    let cube1Pos =  m[m.length - 1].position
-    let cube2Pos =  m[m.length - 2].position
-    let cube1Geo =  m[m.length - 1].geometry.parameters
-    let cube2Geo =  m[m.length - 2].geometry.parameters
+    let cube1Pos =  m.at(-1).position
+    let cube2Pos =  m.at(-2).position
+    let cube1Geo =  m.at(-1).geometry.parameters
+    let cube2Geo =  m.at(-2).geometry.parameters
 
     if (Math.abs(cube1Pos.x - cube2Pos.x) < n && Math.abs(cube1Pos.z - cube2Pos.z ) < n) {
          cube1Pos.x = cube2Pos.x
          cube1Pos.z = cube2Pos.z 
-         world.addBody(meshToBody(m[m.length - 1], 0, true))
+         world.addBody(meshToBody(m.at(-1), 0, true))
          perfectEffect(cube1Pos)
          return "skip"
     }
@@ -276,7 +275,6 @@ function intersects(n) {
         }
     }
     if ((intersection.left > intersection.right || intersection.bottom > intersection.top)) {
-        console.log("dd")
         return false
     }
     else {
@@ -297,12 +295,12 @@ function placeNewBlock() {
     if (movementAxis == "x") {
         movementAxis = "z"
         currentHeight += cubeHeight
-        mesh.position.set(m[m.length - 2].position.x, currentHeight,m[m.length - 2].position.z - 2)
+        mesh.position.set(m.at(-2).position.x, currentHeight,m.at(-2).position.z - 2)
     }
     else {
         movementAxis = "x"  
         currentHeight += cubeHeight
-        mesh.position.set(m[m.length - 1].position.x - 2, currentHeight, m[m.length - 2].position.z)
+        mesh.position.set(m.at(-2).position.x - 2, currentHeight, m.at(-2).position.z)
     }
     scene.add(mesh)
     reversed = false
@@ -310,33 +308,33 @@ function placeNewBlock() {
 
 function move(axis) {
     if (axis == "x") {
-        if (m[m.length - 1].position.x > 2.5) {
+        if (m.at(-1).position.x > 2.5) {
             reversed = true
         }
-        else if (m[m.length - 1].position.x < -2.5) {
+        else if (m.at(-1).position.x < -2.5) {
             reversed = false
         }
         
         if (reversed) {
-            m[m.length - 1].position.x -= speed
+            m.at(-1).position.x -= speed
         }
         else {
-            m[m.length - 1].position.x += speed
+            m.at(-1).position.x += speed
         }
     }
     else if (axis == "z") {
-        if (m[m.length - 1].position.z > 2.5) {
+        if (m.at(-1).position.z > 2.5) {
             reversed = true
         }
-        else if (m[m.length - 1].position.z < -2.5) {
+        else if (m.at(-1).position.z < -2.5) {
             reversed = false
         }
         
         if (reversed) {
-            m[m.length - 1].position.z -= speed
+            m.at(-1).position.z -= speed
         }
         else {
-            m[m.length - 1].position.z += speed
+            m.at(-1).position.z += speed
         }
     }
 }
@@ -354,7 +352,6 @@ function perfectEffect(position) {
     }, 750)
     scene.add(mesh)
 }
-
 
 function updateBackground() {
     let color = "linear-gradient(180deg, "
