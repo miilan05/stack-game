@@ -4,6 +4,8 @@ export default class Sizes extends EventEmitter  {
     constructor() 
     {
         super()
+        this.trigger('resize')
+        this.trigger('resize')
 
         // setup
         this.width = window.innerWidth

@@ -49,7 +49,7 @@ export default class World {
         this.color += this.colorIncrement
         this.addMesh()
         this.color += this.colorIncrement
-        this.move(this.m.at(-1), "x", 3, 1000, this.config.easingFunction)
+        this.move(this.m.at(-1), "x", 2.7, 1000, this.config.easingFunction)
 
     }
 
@@ -189,7 +189,7 @@ export default class World {
             mesh.position.set(this.m.at(-2).position.x - 2, this.currentHeight, this.m.at(-2).position.z)
         }
         this.scene.add(mesh)
-        this.move(this.m.at(-1), this.movementAxis, 3, 1000, this.config.easingFunction)
+        this.move(this.m.at(-1), this.movementAxis, 2.7, 1000, this.config.easingFunction)
         this.reversed = false
     }
 

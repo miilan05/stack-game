@@ -5,8 +5,8 @@ import Sizes from "./Utils/Sizes"
 import Camera from './camera'
 import Renderer from './Renderer'
 import World from './World'
-import WorldPhysics from './WorldPhysics'
 import Config from './Config'
+import Menu from './Utils/Menu';
 
 export default class Game {
     static instance
@@ -29,8 +29,14 @@ export default class Game {
 
         this.sizes = new Sizes()
         this.sizes.on('resize', ()=> { this.resize() })
+        
+        this.menu = new Menu()
+        this.menu.on('togleMenu', () => { this.menu.TogleMenu() } )
+        this.menu.on('openFullScreen', () => {this.sizes.openFullScreen()})
 
         this.update()
+
+
     }
 
     setConfig() {

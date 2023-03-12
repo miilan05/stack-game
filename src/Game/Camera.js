@@ -13,7 +13,7 @@ export default class Camera  {
 
     setInstance() {
         // Set up 
-        this.instance = new THREE.OrthographicCamera(this.config.width / - 240, this.config.width / 240, this.config.height / 280, this.config.height / - 280, 0, 10 );
+        this.instance = new THREE.OrthographicCamera(this.config.width / - 230, this.config.width / 230, this.config.height / 260, this.config.height / - 260, 0, 10 );
         this.instance.position.set(2, 3.3 , 2)
         this.instance.lookAt(0, 3.3, 0)
         this.instance.updateProjectionMatrix()
@@ -25,10 +25,10 @@ export default class Camera  {
         this.instance.aspect = this.config.width / this.config.height
         this.instance.updateProjectionMatrix()
 
-        this.instance.left = this.config.width / - 240
-        this.instance.right = this.config.width / 240
-        this.instance.top = this.config.height / 280
-        this.instance.bottom = this.config.height / - 280
+        this.instance.left = this.config.width / - 230
+        this.instance.right = this.config.width / 230
+        this.instance.top = this.config.height / 260
+        this.instance.bottom = this.config.height / - 260
         // this.instance.lookAt(0, 0.3, 0)
         // this.instance.updateProjectionMatrix();
     }

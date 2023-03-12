@@ -29,8 +29,6 @@ export default class Config {
         this.config.falling = []
         this.config.falling2 = []
         this.config.movementAxis = "x"
-        this.config.currentShape = {x: 2, y: 2}
-        this.config.offset = this.config.offset
         this.config.needsUp = 0
         this.config.m = []
         this.config.randomizeColor = true // if set to false change .color to the prefered value
@@ -83,5 +81,6 @@ export default class Config {
             ["Bounce", "Out"],
             ["Bounce", "InOut"]]
         this.config.easingFunction = this.config.easingFunctions[8]
+        this.config.menu = "window-container"
     }
   }
