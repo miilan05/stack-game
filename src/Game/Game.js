@@ -88,7 +88,6 @@ export default class Game {
 
         window.requestAnimationFrame(() =>
         {
-            console.log("dd")
             this.update()
         })
     }
