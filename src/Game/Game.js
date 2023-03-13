@@ -31,6 +31,7 @@ export default class Game {
         this.sizes.on('resize', ()=> { this.resize() })
         
         this.menu = new Menu()
+        this.menu.TogleMenu()
         this.menu.on('togleMenu', () => { this.menu.TogleMenu() } )
         this.menu.on('openFullScreen', () => {this.sizes.openFullScreen()})
 
@@ -55,7 +56,6 @@ export default class Game {
 
         if(this.renderer)
             this.renderer.resize()
-        this.update()
     }
 
     setScene() {
@@ -88,6 +88,7 @@ export default class Game {
 
         window.requestAnimationFrame(() =>
         {
+            console.log("dd")
             this.update()
         })
     }

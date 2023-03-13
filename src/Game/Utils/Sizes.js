@@ -31,6 +31,5 @@ export default class Sizes extends EventEmitter  {
         || el.msRequestFullscreen
         ;
         rfs.call(el);
-        this.trigger('resize')
     }
 }

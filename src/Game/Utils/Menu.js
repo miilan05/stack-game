@@ -7,26 +7,32 @@ export default class Menu extends EventEmitter {
 
         this.config = new Config().config
         this.menu = document.getElementById(this.config.menu)
-        this.menu.children.item(0).addEventListener('click', () => {
+        this.text = document.getElementById("window-topbar")
+
+        this.text.addEventListener('click', () => {
             this.trigger('togleMenu')
         })
-        this.menu.children.item(1).addEventListener('click', () => {
+        document.getElementById("window-fullscreen").addEventListener('click', () => {
             this.trigger('openFullScreen')
         })
-        this.opened = false
+        this.opened = true
     }
 
     TogleMenu() {
-        console.log("ee")
         if (this.opened) {
-            this.menu.children.item(2).style.display = "none"
-            this.menu.children.item(0).innerHTML = "Maximize Menu"
-            this.config.score.style.display = "block"
+            console.dir()
+            this.menu.style.height = "0"
+            this.menu.style.width = "0"
+            this.config.score.style.visibility = "visible"
+            this.text.textContent = "Maximize Menu"
         }
         else {
-            this.menu.children.item(2).style.display = "grid"
-            this.menu.children.item(0).innerHTML = "Minimize Menu"
-            this.config.score.style.display = "none"
+            let cs = window.getComputedStyle(this.menu).width
+            this.menu.style.width = `${Math.min(600, window.innerWidth)}px`
+            this.menu.style.height = `${Math.min(600, window.innerWidth)/2}px`
+
+            this.config.score.style.visibility = "hidden"
+            this.text.textContent = "Minimize Menu"
         }
         this.opened = !this.opened
     }

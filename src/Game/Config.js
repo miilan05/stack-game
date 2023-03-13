@@ -40,7 +40,7 @@ export default class Config {
         this.config.movementAxis = "x"
         this.config.score = document.getElementById("score")
         this.config.currentShape = {x: 2, y: 2}
-        this.config.offset = 3.3
+        this.config.offset = 2.8
         this.config.needsUp = 0
         this.config.m = []
         this.config.n = Math.floor(Math.random() * 360)
@@ -80,7 +80,7 @@ export default class Config {
             ["Bounce", "In"],
             ["Bounce", "Out"],
             ["Bounce", "InOut"]]
-        this.config.easingFunction = this.config.easingFunctions[8]
-        this.config.menu = "window-container"
+        this.config.easingFunction = this.config.easingFunctions[0]
+        this.config.menu = "grid-container"
     }
   }

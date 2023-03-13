@@ -35,6 +35,6 @@ export default class Camera  {
 
     update() {
         this.instance.position.set(2, this.config.offset , 2);
-        this.instance.lookAt(0, this.instance.position.y - 2, 0);
+        this.instance.lookAt(0, this.instance.position.y - 2.2, 0);
     }
 }
