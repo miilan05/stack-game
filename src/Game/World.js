@@ -55,7 +55,7 @@ export default class World {
 
 
     addStaticMesh() {
-        const texture = new THREE.TextureLoader().load( "./images/1.jpg" );
+        const texture = new THREE.TextureLoader().load( "./dist/images/1.jpg" );
         const staticGeo = new THREE.BoxGeometry(this.currentShape.x, 2, this.currentShape.y, 1);
         const staticTransparentMaterial = new THREE.MeshStandardMaterial({color: `hsl(${this.color%360}, 100%, 30%)`, alphaMap: texture, transparent: true})
         const cubeMaterials = [
