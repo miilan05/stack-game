@@ -4,12 +4,13 @@ import * as THREE from 'three'
 
 export default class WorldPhysics {
     constructor(meshList, bodyList) {
+        // setup
         this.meshList = meshList
         this.bodyList = bodyList
         this.clock = new THREE.Clock()
     }
 
-    update(world) {
+    update = (world) => {
         for(let i = 0; i < this.meshList.length; i++) {
             this.meshList[i].position.copy(this.bodyList[i].position)
             this.meshList[i].quaternion.copy(this.bodyList[i].quaternion)

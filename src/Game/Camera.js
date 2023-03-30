@@ -4,6 +4,7 @@ import Game from "./Game"
 export default class Camera  {
     constructor(_options) 
     {
+        // setup
         this.game = new Game()
         this.scene = this.game.scene
         this.config = this.game.config
@@ -11,8 +12,8 @@ export default class Camera  {
         this.setInstance()
     }
 
-    setInstance() {
-        // Set up 
+    // Sets camera instance
+    setInstance = () => {
         this.instance = new THREE.OrthographicCamera(this.config.width / - 230, this.config.width / 230, this.config.height / 260, this.config.height / - 260, 0, 10 );
         this.instance.position.set(2, 3.3 , 2)
         this.instance.lookAt(0, 3.3, 0)
@@ -21,7 +22,8 @@ export default class Camera  {
         this.scene.add(this.instance)
     }
 
-    resize() {
+    // Resizes camera instance
+    resize = () => {
         this.instance.aspect = this.config.width / this.config.height
         this.instance.updateProjectionMatrix()
 
@@ -29,11 +31,10 @@ export default class Camera  {
         this.instance.right = this.config.width / 230
         this.instance.top = this.config.height / 260
         this.instance.bottom = this.config.height / - 260
-        // this.instance.lookAt(0, 0.3, 0)
-        // this.instance.updateProjectionMatrix();
     }
 
-    update() {
+    // Updates camera instance
+    update = () => {
         this.instance.position.set(2, this.config.offset , 2);
         this.instance.lookAt(0, this.instance.position.y - 2.2, 0);
     }

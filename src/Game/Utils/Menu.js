@@ -4,36 +4,38 @@ import EventEmitter from "./EventEmmiter"
 export default class Menu extends EventEmitter {
     constructor() {
         super()
-
+        // setup
         this.config = new Config().config
         this.menu = document.getElementById(this.config.menu)
-        this.text = document.getElementById("window-topbar")
+        this.toggleButton = document.getElementById("window-topbar")
+        this.score = document.getElementById('score');
 
-        this.text.addEventListener('click', () => {
-            this.trigger('togleMenu')
+        this.toggleButton.addEventListener('click', () => {
+            this.trigger('toggleMenu')
         })
         document.getElementById("window-fullscreen").addEventListener('click', () => {
             this.trigger('openFullScreen')
         })
         this.opened = true
     }
-
-    TogleMenu() {
+    
+    // Toggles movement menu
+    ToggleMenu = () => {
         if (this.opened) {
-            console.dir()
-            this.menu.style.height = "0"
-            this.menu.style.width = "0"
-            this.config.score.style.visibility = "visible"
-            this.text.textContent = "Maximize Menu"
+          this.menu.style.height = "0";
+          this.menu.style.width = "0";
+          this.menu.style.zIndex = ""; // Remove z-index
+          this.score.style.visibility = "visible";
+          this.toggleButton.textContent = "Maximize Menu";
+        } else {
+          const menuWidth = Math.min(600, window.innerWidth);
+          const menuHeight = Math.min(600, window.innerWidth) / 2;
+          this.menu.style.width = `${menuWidth}px`;
+          this.menu.style.height = `${menuHeight}px`;
+          this.menu.style.zIndex = "1"; // Add z-index
+          this.score.style.visibility = "hidden";
+          this.toggleButton.textContent = "Minimize Menu";
         }
-        else {
-            let cs = window.getComputedStyle(this.menu).width
-            this.menu.style.width = `${Math.min(600, window.innerWidth)}px`
-            this.menu.style.height = `${Math.min(600, window.innerWidth)/2}px`
-
-            this.config.score.style.visibility = "hidden"
-            this.text.textContent = "Minimize Menu"
-        }
-        this.opened = !this.opened
-    }
+        this.opened = !this.opened;
+      };
 }

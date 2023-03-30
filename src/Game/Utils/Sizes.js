@@ -23,7 +23,8 @@ export default class Sizes extends EventEmitter  {
         })
     }
 
-    openFullScreen() {
+    // Opens full screen 
+    openFullScreen = () => {
         var el = document.documentElement,
         rfs = el.requestFullscreen
         || el.webkitRequestFullScreen

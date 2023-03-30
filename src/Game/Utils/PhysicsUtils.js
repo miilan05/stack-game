@@ -1,7 +1,9 @@
 import * as CANNON from 'cannon-es'
 
 export default class PhysicsUtils {
-    static meshToBody(mesh, mass, returnBody = false) {
+    
+    // Converts three.js mesh to CANNON body
+    static meshToBody = (mesh, mass, returnBody = false) => {
         let position = mesh.position
         let geometry = mesh.geometry.parameters
         const body = new CANNON.Body({
