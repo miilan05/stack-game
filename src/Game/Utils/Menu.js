@@ -6,7 +6,7 @@ export default class Menu extends EventEmitter {
         super()
         // setup
         this.config = new Config().config
-        this.menu = document.getElementById(this.config.menu)
+        this.menu = this.config.menu
         this.toggleButton = document.getElementById("window-topbar")
         this.score = document.getElementById('score');
 
@@ -14,7 +14,7 @@ export default class Menu extends EventEmitter {
             this.trigger('toggleMenu')
         })
         document.getElementById("window-fullscreen").addEventListener('click', () => {
-            this.trigger('openFullScreen')
+            this.trigger('toggleFullScreen')
         })
         this.opened = true
     }

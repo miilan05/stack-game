@@ -38,8 +38,8 @@ export default class Game {
     this.menu.on('toggleMenu', () => {
       this.menu.ToggleMenu();
     });
-    this.menu.on('openFullScreen', () => {
-      this.sizes.openFullScreen();
+    this.menu.on('toggleFullScreen', () => {
+      this.sizes.toggleFullScreen();
     });
 
     // Start the game loop

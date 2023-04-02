@@ -1,3 +1,4 @@
+// THE EVENT EMMITER CLASS IS COPIED FROM https://github.com/brunosimon
 export default class EventEmitter
 {
     constructor()

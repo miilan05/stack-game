@@ -3,7 +3,7 @@ import * as CANNON from 'cannon-es'
 export default class Config {
     constructor() {
         this.config = {}
-    
+        this.config.map = {static: [], falling: []}
         // Add event listener to every menu button
         const gridItems = document.querySelectorAll('.grid-item');
         gridItems.forEach((item, index) => {
@@ -21,20 +21,15 @@ export default class Config {
         const boundings = document.querySelector('.game').getBoundingClientRect()
         this.config.width = boundings.width
         this.config.height = boundings.height || window.innerHeight
-        this.config.falling = []
-        this.config.falling2 = []
         this.config.randomizeColor = true // if set to false change .color to the prefered value
         this.config.color = 100 // hsl value
-        this.config.colorIncrement = 3
-        this.config.movementAxis = "x"
-        this.config.score = document.getElementById("score")
-        this.config.currentShape = {x: 2, y: 2}
-        this.config.offset = 2.8
-        this.config.needsUp = 0
-        this.config.m = []
-        this.config.n = Math.floor(Math.random() * 360)
-        this.config.cubeHeight = 0.24
-        this.config.currentHeight = 0.5;
+        this.config.colorIncrement = 3 // color incrementation after every click
+        this.config.movementAxis = "x" // current and srarting movement axis
+        this.config.currentShape = {x: 2, y: 2} // current and starting shape
+        this.config.offset = 2.8 // camera z offset from 0
+        this.config.needsUp = 0 
+        this.config.cubeHeight = 0.24 
+        this.config.currentHeight = this.config.cubeHeight * 2 + 0.02; // the height at which cubes are placed
         this.config.lost = false
         this.config.easingFunctions = [
             ["Linear","None"],
@@ -69,6 +64,8 @@ export default class Config {
             ["Bounce", "Out"],
             ["Bounce", "InOut"]]
         this.config.easingFunction = this.config.easingFunctions[0]
-        this.config.menu = "grid-container"
+        this.config.score = document.getElementById("score")
+        this.config.menu = document.getElementById("grid-container")
+        this.config.gameElement = document.querySelector('.game')
     }
   }

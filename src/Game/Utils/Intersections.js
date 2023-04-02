@@ -8,7 +8,7 @@ export default class Intersections {
         return { left, bottom, right, top };
       };
       
-      // Function to check if two cubes intersect
+      // Function to check if two cubes intersect, returns the inside and outsite piece of the intersection.
       static intersects = (cube1, cube2, error = 0.1) => {
         const { position: cube1Pos, geometry: { parameters: cube1Geo } } = cube1;
         const { position: cube2Pos, geometry: { parameters: cube2Geo } } = cube2;

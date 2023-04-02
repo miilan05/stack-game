@@ -1,7 +1,9 @@
 const path = require("path");
 
 module.exports = {
-    entry:  './src/script.js',
+    entry: { 
+        "index.html": "./src/index.html",
+    },
     devServer: {
         port: 8080,
         static: './dist',
@@ -13,13 +15,20 @@ module.exports = {
     },
     module: {
         rules: [
+          { test: /\.css$/, use: ['style-loader', 'css-loader'] },
           {
-            test: /\.css$/,
+            test: /\.(png|jpg|gif)$/i,
             use: [
-              'style-loader',
-              'css-loader'
-            ]
-          }
+              {
+                loader: 'file-loader',
+                options: {
+                  name: '[name].[ext]',
+                  outputPath: './Images',
+                  publicPath: './Images',
+                },
+              },
+            ],
+          },        
         ]
       },
     mode: "development"

@@ -81,7 +81,9 @@ body {
 
 
 
-#window-topbar:hover {
+#window-topbar:hover,
+#window-fullscreen:hover {
+    user-select: none;
     cursor: pointer;
 }
 

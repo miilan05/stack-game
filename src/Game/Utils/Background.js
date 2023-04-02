@@ -1,4 +1,6 @@
 export default class Background {
+    // this could be improved, we basically create a really long gradient on every click and change it a bit
+    // so it gives an illusion that its slowly changing 
     static updateBackground = (n) => {
         let color = "linear-gradient(180deg, "
         for(let i = 0; i < 11; i++ ) {
