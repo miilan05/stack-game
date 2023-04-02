@@ -16,7 +16,8 @@ export default class Config {
                 }
             });
         });
-
+        this.config.movementSpeed = 1000
+        this.config.movementSpeedIncrease = 0.02
         this.config.pixelRatio = Math.min(Math.max(window.devicePixelRatio, 1), 2)
         const boundings = document.querySelector('.game').getBoundingClientRect()
         this.config.width = boundings.width

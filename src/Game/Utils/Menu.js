@@ -20,11 +20,12 @@ export default class Menu extends EventEmitter {
     }
     
     // Toggles movement menu
+    // IMPROVE THIS!
     ToggleMenu = () => {
         if (this.opened) {
           this.menu.style.height = "0";
           this.menu.style.width = "0";
-          this.menu.style.zIndex = ""; // Remove z-index
+          this.menu.style.zIndex = "";
           this.score.style.visibility = "visible";
           this.toggleButton.textContent = "Maximize Menu";
         } else {

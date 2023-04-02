@@ -32,23 +32,24 @@ export default class World {
 
     setInstanceVariables = () => {
         // we load every variable that the world class needs from the config class
-        const { config } = this;
-        this.map = config.map
+        this.map = this.config.map
         this.scene = this.game.scene;
         this.instance = new CANNON.World();
         this.instance.gravity.set(0, -10, 0);
-        this.movementAxis = config.movementAxis;
-        this.score = config.score;
+        this.movementAxis = this.config.movementAxis;
+        this.score = this.config.score;
         this.score.innerHTML = 0;
-        this.currentShape = Object.assign({}, config.currentShape);
-        this.offset = config.offset;
-        this.needsUp = config.needsUp;
-        this.color = config.randomizeColor ? Math.floor(Math.random() * 360) : config.color;
-        this.colorIncrement = config.colorIncrement;
-        this.cubeHeight = config.cubeHeight;
-        this.currentHeight = config.currentHeight;
-        this.lost = config.lost;
-        this.gameElement = config.gameElement
+        this.currentShape = Object.assign({}, this.config.currentShape);
+        this.offset = this.config.offset;
+        this.needsUp = this.config.needsUp;
+        this.color = this.config.randomizeColor ? Math.floor(Math.random() * 360) : this.config.color;
+        this.colorIncrement = this.config.colorIncrement;
+        this.cubeHeight = this.config.cubeHeight;
+        this.currentHeight = this.config.currentHeight;
+        this.lost = this.config.lost;
+        this.gameElement = this.config.gameElement
+        this.movementSpeed = this.config.movementSpeed
+        this.movementSpeedIncrease = this.config.movementSpeedIncrease
         
         Background.updateBackground(this.color);
     }
@@ -74,7 +75,7 @@ export default class World {
     // the addStaticMesh and addNextMesh ads the initial meshes to the scene
     addStaticMesh = () => {
         const staticGeo = this.createGeometry(this.currentShape.x, 2, this.currentShape.y);
-        const staticTransparentMaterial = this.createMaterial(this.color);
+        const staticTransparentMaterial = this.createMaterial(this.color, 0.7);
 
         const texture = new THREE.TextureLoader().load("./images/1.jpg");
         staticTransparentMaterial.alphaMap = texture;
@@ -83,7 +84,7 @@ export default class World {
         const cubeMaterials = [
         staticTransparentMaterial,
         staticTransparentMaterial,
-        this.createMaterial(this.color),
+        this.createMaterial(this.color, 0.7),
         staticTransparentMaterial,
         staticTransparentMaterial,
         staticTransparentMaterial,
@@ -100,7 +101,7 @@ export default class World {
   
     addNextMesh = () => {
         const geometry = this.createGeometry(this.currentShape.x, this.currentShape.y, this.cubeHeight);
-        const material = this.createMaterial(this.color);
+        const material = this.createMaterial(this.color, 1);
         const mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(-1, this.currentHeight, 0);
         mesh.castShadow = true;
@@ -115,10 +116,10 @@ export default class World {
     }
 
     startMovingMesh = () => {
-        this.move(this.map.static.at(-1).mesh, "x", 2.7, 1000, this.config.easingFunction);
+        this.move(this.map.static.at(-1).mesh, "x", 2.7, this.movementSpeed, this.config.easingFunction);
     }
 
-    createMaterial = (hue) => {
+    createMaterial = (hue ,opacity) => {
         const color = `hsl(${hue % 360}, 100%, ${30 + 10 * opacity}%)`;
         const material = new THREE.MeshStandardMaterial({ color });
     
@@ -130,6 +131,7 @@ export default class World {
     }
 
     onClick = () => {
+        this.movementSpeed = this.increaseSpeed(this.movementSpeed, this.movementSpeedIncrease, 200)
         const lastBlock = this.map.static.at(-1).mesh;
         const previousBlock = this.map.static.at(-2).mesh;
         
@@ -145,7 +147,7 @@ export default class World {
         this.score.innerHTML = parseInt(this.score.innerHTML) + 1;
         Background.updateBackground(this.color);
         this.cutAndPlace(intersect.insidePiece, false);
-        // in case the intersects function hasnt returnd an outside piece the user has made a perfect intersection and we play the effect
+        // in case the intersects function hasnt returnd an outside piece the user has made a perfect intersection and we play the perfec effect
         if (!intersect.outsidePiece) { Effects.perfectEffect(this.scene, this.map.static.at(-1).mesh.position, this.currentShape.x + 0.2, this.currentShape.y + 0.2);} 
         else { this.cutAndPlace(intersect.outsidePiece, true); }
         
@@ -183,7 +185,7 @@ export default class World {
     // this places a new block after we clicked
     placeNewBlock = () => {
         const geometry = this.createGeometry(this.currentShape.x, this.currentShape.y, this.cubeHeight);
-        const material = this.createMaterial(this.color);
+        const material = this.createMaterial(this.color, 1);
         const mesh = new THREE.Mesh(geometry, material);
         mesh.castShadow = true;
         mesh.receiveShadow = true;
@@ -202,7 +204,7 @@ export default class World {
             mesh.position.set(this.map.static.at(-2).mesh.position.x - 2, this.currentHeight, this.map.static.at(-2).mesh.position.z)
         }
         this.scene.add(mesh)
-        this.move(this.map.static.at(-1).mesh, this.movementAxis, 2.7, 1000, this.config.easingFunction)
+        this.move(this.map.static.at(-1).mesh, this.movementAxis, 2.7, this.movementSpeed, this.config.easingFunction)
     }
 
     // this function moves a mesh on an axis from a to b 
@@ -221,10 +223,14 @@ export default class World {
         })
         // we switch directions after one movement is complete
         .onComplete(()=>{
-                this.move(mesh, this.movementAxis, -target, 1000, this.config.easingFunction)
+                this.move(mesh, this.movementAxis, -target, duration, this.config.easingFunction)
         })
         .start();
     }
+
+    increaseSpeed = (initialSpeed, increaseRate, maxSpeed) => {
+        return Math.max(initialSpeed + (maxSpeed - initialSpeed) * (1 - Math.exp(-increaseRate)), maxSpeed);
+    } 
 
     lostFunction = (lastBlock) => {
         // we end the game and let the last cube fall down

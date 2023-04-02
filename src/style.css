@@ -72,6 +72,7 @@ body {
     text-align: center;
     background-color: white;
     margin-bottom: 8px;
+    user-select: none;
 }
 
 #window-fullscreen {

@@ -24,6 +24,7 @@ export default class Camera  {
 
     // Resizes camera instance
     resize = () => {
+        console.log(this.config)
         this.instance.aspect = this.config.width / this.config.height
         this.instance.updateProjectionMatrix()
 
@@ -32,6 +33,7 @@ export default class Camera  {
         this.instance.top = this.config.height / 260
         this.instance.bottom = this.config.height / - 260
     }
+    
 
     // Updates camera instance
     update = () => {

@@ -1,4 +1,3 @@
-"use strict";
 
 import './style.css'
 import Game from './Game/Game'
@@ -8,9 +7,8 @@ import Game from './Game/Game'
 // ORDER THE CONFIG CLASS VARIABLES BETTER
 
 //  CREATE MENU UI
-// CHANGE NEEDSUP
-// ADD SPEED INCREASE OVER TIME
-// ADD COMMENTS EVERYWHERE AND CREATE A README FILE 
+// CHANGE NEEDSUP TO SOMETHING BETTER
+// CREATE A README FILE 
 
 // by creating the game variable we initialize the game
 const game = new Game({
