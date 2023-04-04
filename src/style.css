@@ -62,22 +62,26 @@ body {
 
 #window-topbar,
 #window-fullscreen {
-    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     position: fixed;
     top: 0;
     right: 0;
-    color: rgb(113, 113, 113);
+    z-index: 2;
     width: 50%;
-    height: 20px;
-    text-align: center;
-    background-color: white;
+    height: 30px;
     margin-bottom: 8px;
+    background-color: white;
+    color: rgb(113, 113, 113);
     user-select: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.254);
 }
 
 #window-fullscreen {
     left: 0;
-    border-right: 1px solid rgb(173, 173, 173);
+    border-right: 1px solid rgba(0, 0, 0, 0.108);
 }
 
 
@@ -88,23 +92,80 @@ body {
     cursor: pointer;
 }
 
-img {
+.grid-item img {
     /* object-fit: fill; */
     width: 100%;
     height: 100%;
     border-radius: 10px;
 }
 
-h1 {
+#text {
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: fixed;
+    top: 18%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    color: white;
+}
+
+#text h1 {
+    text-align: center;
+    width: 100%;
+    font-size: 100px;
+    font-weight: 100;
+}
+
+#text p {
+    font-size: 30px;
+    font-weight: 100;
+}
+
+#ui {
+    visibility: visible;
+}
+
+#scores {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     user-select: none;
     padding: 0;
     margin: 0;
     color: white;
-    font-size: 130px;
     z-index: 0;
     position: fixed;
-    top: 13%;
+    top: 18vh;
     left: 50%;
     transform: translate(-50%, -50%);
     font-weight: 300;
+}
+
+#score {
+    text-align: center;
+    width: 100%;
+    font-size: 130px;
+    font-weight: 100;
+}
+
+#highscore {
+    font-weight: 100;
+
+    display: flex;
+    align-items: center;
+}
+
+#highscore p {
+    text-align: center;
+    width: 100%;
+    font-size: 50px;
+}
+
+#highscore img {
+    width: 4rem;
+    height: 4rem;
+    margin-right: 5px;
 }

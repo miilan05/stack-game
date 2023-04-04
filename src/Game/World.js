@@ -7,6 +7,7 @@ import Effects from './Utils/Effects';
 import * as CANNON from 'cannon-es';
 import PhysicsUtils from './Utils/PhysicsUtils';
 import WorldPhysics from './WorldPhysics';
+import Menu from './Utils/Menu'
 
 export default class World {
     constructor(_options) {
@@ -20,14 +21,16 @@ export default class World {
 
         this.setSceneAndPhysics();
         this.addLight();
+        this.menu.ToggleScore(false)
+        this.menu.ToggleHighScore(false)
     }
 
     setSceneAndPhysics = () => {
         this.setInstanceVariables();
         this.setWorldPhysics();
         this.addStaticMesh();
-        this.addNextMesh();
-        this.startMovingMesh();
+        // this.addNextMesh();
+        // this.startMovingMesh();
     }
 
     setInstanceVariables = () => {
@@ -50,7 +53,9 @@ export default class World {
         this.gameElement = this.config.gameElement
         this.movementSpeed = this.config.movementSpeed
         this.movementSpeedIncrease = this.config.movementSpeedIncrease
-        
+        this.started = this.config.started
+        this.menu = new Menu()
+
         Background.updateBackground(this.color);
     }
 
@@ -131,6 +136,8 @@ export default class World {
     }
 
     onClick = () => {
+        if (this.lost) { this.restart(); this.lost = false; return}
+        if (!this.config.started) {this.start(); this.config.started = true; return}
         this.movementSpeed = this.increaseSpeed(this.movementSpeed, this.movementSpeedIncrease, 200)
         const lastBlock = this.map.static.at(-1).mesh;
         const previousBlock = this.map.static.at(-2).mesh;
@@ -140,7 +147,6 @@ export default class World {
       
         const intersect = Intersections.intersects(lastBlock, previousBlock);
         // if we click but the game is lost we restart it and exit the function
-        if (this.lost) { this.restart(); this.lost = false; return}
         // if there is no intersection the user has lost and the function exits
         if (!intersect) { this.lostFunction(lastBlock); return}
         // if both ifs above arent true we update everything and continue the game
@@ -235,13 +241,25 @@ export default class World {
     lostFunction = (lastBlock) => {
         // we end the game and let the last cube fall down
         this.lost = true;
+        this.config.started = false
         this.needsUp = 0;
         const body = PhysicsUtils.meshToBody(lastBlock, 1, true);
         this.map.falling.push({mesh: lastBlock, body: body})
         this.instance.addBody(body);
+        this.menu.ToggleHighScore(true)
     }
 
+    start = () => {
+        this.addNextMesh();
+        this.startMovingMesh();
+        this.menu.ToggleUI(false)
+        this.menu.ToggleScore(true)
+    }
+    
     restart = () => {
+        this.menu.ToggleUI(true)
+        this.menu.ToggleHighScore(false)
+        this.menu.ToggleScore(false)
         this.game.config.offset = this.offset;
         this.map.static.forEach((e) => {
             this.scene.remove(e.mesh);

@@ -32,6 +32,7 @@ export default class Config {
         this.config.cubeHeight = 0.24 
         this.config.currentHeight = this.config.cubeHeight * 2 + 0.02; // the height at which cubes are placed
         this.config.lost = false
+        this.config.started = false
         this.config.easingFunctions = [
             ["Linear","None"],
             ["Quadratic", "In"],
@@ -66,7 +67,11 @@ export default class Config {
             ["Bounce", "InOut"]]
         this.config.easingFunction = this.config.easingFunctions[0]
         this.config.score = document.getElementById("score")
+        this.config.highscore = document.getElementById("highscore")
         this.config.menu = document.getElementById("grid-container")
         this.config.gameElement = document.querySelector('.game')
+        this.config.menuToggleButton = document.getElementById("window-topbar")
+        this.config.fullScreenButton = document.getElementById("window-fullscreen")
+        this.config.ui = document.getElementById("text")
     }
   }
